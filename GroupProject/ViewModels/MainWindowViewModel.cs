@@ -1,18 +1,22 @@
 ﻿
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform.Storage;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using DynamicData;
+using GP_models.Models;
 using ReactiveUI;
+using ScottPlot.Avalonia;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reactive;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
-using System.Reflection.Emit;
 
 namespace GroupProject.ViewModels
 {
@@ -23,21 +27,27 @@ namespace GroupProject.ViewModels
         [ObservableProperty]
         private byte[] image;
 
+        //DataBase
+        [ObservableProperty]
+        private ObservableCollection<ConvertionRecord> convertionRecords;
 
-        [RelayCommand]
-        private void ShowStatistics()
+        //Hitograms
+        [ObservableProperty]
+        private AvaPlot _originalPlot;
+
+        [ObservableProperty]
+        private AvaPlot _convertedPlot;
+
+        public Interaction<FilePickerSaveOptions, IStorageFile?> ShowSaveDialog { get; } = new Interaction<FilePickerSaveOptions, IStorageFile?>();
+
+
+        public MainWindowViewModel()
         {
-            CurrentView = new StatisticsViewModel();
-        }
-        [RelayCommand]
-        private void ShowHistograms()
-        {
-            CurrentView = new HistogramsViewModel();
-        }
-        [RelayCommand]
-        private void ShowConvertion()
-        {
-            CurrentView = new ConvertionViewModel();
+            using (AppDbContext context = new AppDbContext())
+            {
+                convertionRecords = new ObservableCollection<ConvertionRecord>();
+                convertionRecords.AddRange(context.ConvertionRecords.ToArray());
+            }
         }
     }
 }

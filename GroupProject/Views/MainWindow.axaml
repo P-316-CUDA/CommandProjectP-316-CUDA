@@ -162,34 +162,47 @@
                     </StackPanel>
                 </Button>
             </StackPanel>
-            <Grid RowSpacing="10" RowDefinitions="50, *" Grid.Column="1">
-				<StackPanel Grid.Row="0" Spacing="10" Orientation="Horizontal" Background="#252525" >
-					<Button Command="{Binding ShowConvertionCommand}">
-						<StackPanel>
-							<TextBlock Text="Convertion results"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding ShowHistogramsCommand}">
-						<StackPanel>
-							<TextBlock Text="Histograms"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding ShowStatisticsCommand}">
-						<StackPanel>
-							<TextBlock Text="Convertion history"/>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-                <StackPanel Grid.Row="1" Spacing="10" Orientation="Vertical" Background="#252525" >
-					<ContentControl Content="{Binding CurrentView}">
-                        <ContentControl.Template>
-							<ControlTemplate TargetType="ContentControl">
-								<ContentPresenter Content="{TemplateBinding Content}"/>
-                            </ControlTemplate>
-                        </ContentControl.Template>
-                    </ContentControl>
-                </StackPanel>
-            </Grid>
+            <TabControl Grid.Column="1">
+				<TabItem Header="Convertion results">
+					
+                </TabItem>
+                <TabItem Header="Histograms">
+                    <Grid ColumnDefinitions="*,*">
+                        <ContentControl>
+                            <ContentControl.Template>
+			                    <ControlTemplate TargetType="ContentControl">
+				                    <ContentPresenter Content="{TemplateBinding Content}" />
+                                </ControlTemplate>
+                            </ContentControl.Template>
+                         </ContentControl>
+                    </Grid>					
+                </TabItem>
+                <TabItem Header="See statistics">
+			        <StackPanel Orientation="Vertical" Spacing="10" >
+		                <Grid>
+			                <Button HorizontalAlignment="Center" >
+				                <StackPanel>
+					                <TextBlock Text="Export as JSON"/>
+                                 </StackPanel>
+                            </Button>
+                        </Grid>
+                        <DataGrid ItemsSource="{Binding ConvertionRecords}"
+                                        IsReadOnly="True" 
+                                        AutoGenerateColumns="False">
+	                        <DataGrid.Columns>
+				                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="80"/>
+                                <DataGridTextColumn Header="Amount of pixels" Binding="{Binding PixelsAmount}" Width="*"/>
+                                <DataGridTextColumn Header="Colour mode" Binding="{Binding ColourMode}" Width="*"/>
+                                <DataGridTextColumn Header="GPU model" Binding="{Binding GpuModel}" Width="*"/>
+                                <DataGridTextColumn Header="Cuda cores" Binding="{Binding CudaCores}" Width="*"/>
+                                <DataGridTextColumn Header="Convertion time" Binding="{Binding ConvertionTime}" Width="*"/>
+                                <DataGridTextColumn Header="Convertion date" Binding="{Binding PixelsAmount}" Width="*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
         </Grid>
     </DockPanel>
 </Window>
+

@@ -12,16 +12,4 @@
         <FluentTheme />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
     </Application.Styles>
-
-    <Application.DataTemplates>
-	    <DataTemplate DataType="vm:StatisticsViewModel">
-            <local:StatisticsVIew/>
-        </DataTemplate>
-        <DataTemplate DataType="vm:HistogramsViewModel">
-			<local:HistogramsView/>
-        </DataTemplate>
-        <DataTemplate DataType="vm:ConvertionViewModel">
-			<local:ConvertionView/>
-        </DataTemplate>
-    </Application.DataTemplates>
 </Application>
