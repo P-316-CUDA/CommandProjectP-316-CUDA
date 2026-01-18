@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:GroupProject.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:StatisticsViewModel"
+             x:Class="GroupProject.StatisticsVIew">
+     
+
+    <StackPanel Orientation="Vertical" Spacing="10" >
+		<Grid>
+			<Button HorizontalAlignment="Center" >
+				<StackPanel>
+					<TextBlock Text="Export as JSON"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+        <DataGrid ItemsSource="{Binding ConvertionRecords}"
+                  IsReadOnly="True" 
+                  AutoGenerateColumns="False">
+	        <DataGrid.Columns>
+				<DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="80"/>
+                <DataGridTextColumn Header="Amount of pixels" Binding="{Binding PixelsAmount}" Width="*"/>
+                <DataGridTextColumn Header="Colour mode" Binding="{Binding ColourMode}" Width="*"/>
+                <DataGridTextColumn Header="GPU model" Binding="{Binding GpuModel}" Width="*"/>
+                <DataGridTextColumn Header="Cuda cores" Binding="{Binding CudaCores}" Width="*"/>
+                <DataGridTextColumn Header="Convertion time" Binding="{Binding ConvertionTime}" Width="*"/>
+                <DataGridTextColumn Header="Convertion date" Binding="{Binding PixelsAmount}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</UserControl>
