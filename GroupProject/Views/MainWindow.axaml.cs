@@ -1,65 +1,38 @@
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
+using GP_models.Models;
 using GroupProject.ViewModels;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace GroupProject
 {
     public partial class MainWindow : Window
     {
-        private byte[] image;
+
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
-        }
-        private async void ImageUpload(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            var files = await this.StorageProvider.OpenFilePickerAsync(
-                new FilePickerOpenOptions
+            if (DataContext is MainWindowViewModel viewModel)
+            {
+
+                viewModel.ShowOpenFileDialog.RegisterHandler(async (context) =>
                 {
-                  Title = "Select an image",
-                  AllowMultiple = false,
-                  FileTypeFilter = new[]
-                  {
-                    new FilePickerFileType("Image files")
-                    {
-                        Patterns = new[] { "*.jpg", "*.jpeg", "*.png", "*.bmp", "*.gif" }
-                    }
-                  }
-            });
-
-            if (files.Count != 0 && files[0] is IStorageFile file)
-                try
+                    var files = await StorageProvider.OpenFilePickerAsync(context.Input);
+                    context.SetOutput(files);
+                });
+                viewModel.ShowSaveDialog.RegisterHandler(async (context) =>
                 {
-                    await using var stream1 = await file.OpenReadAsync();
-
-                    using var memoryStream = new MemoryStream();
-
-                    await stream1.CopyToAsync(memoryStream);
-
-                    image = memoryStream.ToArray();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error reading file: {ex.Message}");
-                }
-            using var stream2 = new MemoryStream(image);
-            //Uploa.Source = Bitmap.DecodeToWidth(stream2, 400);
-            Img.Source = Bitmap.DecodeToWidth(stream2, 400);
-            button.IsEnabled = false;
-            button.IsVisible = false;
-        }
-        private void Clear(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-        {
-            image = null;
-            Img.Source = null;
-            AddImageButton.IsEnabled = true;
-            AddImageButton.IsVisible = true;
+                    var files = await StorageProvider.SaveFilePickerAsync(context.Input);
+                    context.SetOutput(files);
+                });
+            }
         }
     }
 }
