@@ -29,7 +29,7 @@
 
 ## Скриншоты программы 
 
-![This is an alt text.](/image/Markdown-mark.svg "This is a sample image.")
+![This is an alt text.](/Screenshots/Ui.png "This is a sample image.")
 
 ## 
 
