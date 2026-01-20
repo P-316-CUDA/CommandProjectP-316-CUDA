@@ -29,7 +29,7 @@
 
 ## Скриншоты программы 
 
-[](/Screenshots/Ui.png "Ui")
+[Alt text](/Screenshots/Ui.png "Ui")
 
 ## 
 
