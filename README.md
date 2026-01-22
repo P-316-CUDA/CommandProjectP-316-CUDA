@@ -30,7 +30,9 @@
 
 ## Скриншоты программы 
 
-![](/Screenshots/Ui.png)
+![](/Screenshots/Convertion.png)
+![](/Screenshots/Histograms.png)
+![](/Screenshots/Statistics.png)
 
 ## 
 
